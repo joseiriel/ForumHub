@@ -1,47 +1,55 @@
-create table usuarios(
-    id bigint not null auto_increment,
+create table curso (
+    id bigint not null,
+    nome varchar(100) not null,
+    categoria varchar(100) not null,
+
+    primary key(id)
+);
+
+create table perfil (
+    id bigint not null,
+    nome varchar(100) not null,
+
+    primary key(id)
+);
+
+create table usuario (
+    id bigint not null,
     nome varchar(100) not null,
     email varchar(100) not null unique,
     senha varchar(100) not null,
 
-    primary key (id)
+    perfil_id bigint not null,
+    constraint fk_usuario_perfil_id foreign key(perfil_id) references perfil(id),
+
+    primary key(id)
 );
 
-create table cursos(
-    id bigint not null auto_increment,
-    nome varchar(100) not null,
-    categoria varchar(100),
-
-    primary key (id)
-);
-
-create table topicos(
-    id bigint not null auto_increment,
+create table topico (
+    id bigint not null,
     titulo varchar(100) not null,
-    mensagem text not null,
+    mensagem varchar(255) not null,
     data datetime not null,
-    status varchar(100),
+    status varchar(100) not null,
 
-    usuario_id bigint not null,
+    autor_id bigint not null,
     curso_id bigint not null,
+    constraint fk_topico_autor_id foreign key(autor_id) references usuario(id),
+    constraint fk_topico_curso_id foreign key(curso_id) references curso(id),
 
-    foreign key (usuario_id) references usuarios(id),
-    foreign key (curso_id) references cursos(id),
-
-    primary key (id)
+    primary key(id)
 );
 
-create table respostas(
-    id bigint not null auto_increment,
-    mensagem text not null,
+create table resposta (
+    id bigint not null,
+    mensagem varchar(255) not null,
     data datetime not null,
-    solucao tinyint not null,
+    solucao boolean not null,
 
     topico_id bigint not null,
-    usuario_id bigint not null,
+    autor_id bigint not null,
+    constraint fk_resposta_topico_id foreign key(topico_id) references topico(id),
+    constraint fk_resposta_autor_id foreign key(autor_id) references usuario(id),
 
-    foreign key (topico_id) references topicos(id),
-    foreign key (usuario_id) references usuarios(id),
-
-    primary key (id)
-)
+    primary key(id)
+);

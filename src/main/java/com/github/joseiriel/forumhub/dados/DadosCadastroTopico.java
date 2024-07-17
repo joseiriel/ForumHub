@@ -1,5 +1,4 @@
-package com.github.joseiriel.forumhub;
-
+package com.github.joseiriel.forumhub.dados;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,13 +6,8 @@ import jakarta.validation.constraints.NotNull;
 public record DadosCadastroTopico(
         @NotBlank
         String titulo,
-        @NotNull
-        Long idAutor,
         @NotBlank
         String mensagem,
-        @NotBlank
-        String status,
         @NotNull
-        Long idCurso
-) {
-}
+        Long curso_id
+) {}
